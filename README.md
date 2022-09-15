@@ -17,7 +17,7 @@ Maaike de Jong1,5*, Alexandra Jansen van Rensburg1,4*, Samuel Whiteford2, Carl J
 
 ## 0.Map with sample sites
 
-Use [0_SampleMap.r](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Scripts/0_SampleMap.r) with [BA_SiteInfo](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/BA_SiteInfo) as input file to generate the sample map. 
+Use [0_SampleMap.r](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Scripts/0_SampleMap.r) with [BA_SiteInfo](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/BA_SiteInfo) as input file to generate the sample map in Figure 1. 
 
 ## 1.RawData_to_Variants.md
 
@@ -41,10 +41,13 @@ Filtering of SNPs for 1) population genetic analyses, and 2) outlier/Environment
 
 ## 4.ColonisationHistory
 
-How did A.agestis colonise the UK? 
+1. How did A.agestis colonise the UK? 
 
-  - fastSimCoal analyses
+ - fastSimCoal analyses
 
+2. Where were the new sites colonised from? 
+
+ - fastSimCoal analyses 
 
 ## 5.SpecialisationAtRangeMargin.md
 
@@ -57,6 +60,16 @@ Have population at the range margin become specialised? What are the main driver
 
 Has A.agestis specialised on new host plant at range margins? 
 
-   - Environmental Association Analysis
+   - Fst outlier analysis (Bayescan)
       
-      Identify outliers 
+   - Identify outliers 
+
+   - Find annotations for outliers
+
+
+## 7.HaplotypeNetwork.md
+
+
+      
+      
+
