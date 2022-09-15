@@ -23,4 +23,3 @@ Maaike de Jong1,5*, Alexandra Jansen van Rensburg1,4*, Samuel Whiteford2, Carl J
 5 Current address: Netherlands eScience Center, 1098 XG Amsterdam, The Netherlands. 
  
 + To whom correspondence should be addressed: j.bridle@ucl.ac.uk
-
