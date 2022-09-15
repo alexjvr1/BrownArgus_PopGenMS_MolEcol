@@ -1,5 +1,3 @@
-# BrownArgus_PopGenMS_MolEcol
-
 Data analysis and scripts for the manuscript entitled: 
 
 ### Rapid evolution of novel biotic interactions in the UK Brown Argus butterfly uses genomic variation from across its geographical range
