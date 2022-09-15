@@ -17,7 +17,7 @@ Maaike de Jong1,5*, Alexandra Jansen van Rensburg1,4*, Samuel Whiteford2, Carl J
 
 ## 0.Map with sample sites
 
-Use [0_SampleMap.r](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Scripts/0_SampleMap.r) with []() as input file to generate the sample map. 
+Use [0_SampleMap.r](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Scripts/0_SampleMap.r) with [BA_SiteInfo](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/BA_SiteInfo) as input file to generate the sample map. 
 
 ## 1.RawData_to_Variants.md
 
