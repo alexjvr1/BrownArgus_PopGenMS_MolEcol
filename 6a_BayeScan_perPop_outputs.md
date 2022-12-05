@@ -4,6 +4,13 @@ Goal: check if a single population has an effect on the final outliers identifie
 
 ### Inputs:
 
+Find inputs and outputs here: 
+
+[ColHistory](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/tree/main/Files/Bayescan_Jackknife_ColHist)
+
+[HostPlant](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/tree/main/Files/Bayescan_Jackknife_HostPlant)
+
+
 /Users/alexjvr/2018.postdoc/BrownArgus_2018/201902_DataAnalysis/Bayescan/
 
 I generated input files for each of the ColHist and HostPlant input files which excludes a single population. 
