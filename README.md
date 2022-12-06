@@ -69,7 +69,9 @@ Has A.agestis specialised on new host plant at range margins?
 
 ## 7.HaplotypeNetwork.md
 
+Were the adaptive haplotypes introduced from the pre-adapted HOD population? 
 
+If not, where did they originate from? 
       
       
 
