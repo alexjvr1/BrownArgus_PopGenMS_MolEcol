@@ -157,9 +157,6 @@ dev.off()
 [miss]:https://user-images.githubusercontent.com/12142475/206148905-8bfe17bf-fda3-43a2-91b4-e803240f5d0c.png
 
 
-# Analysis of ddRAD loci using a de novo assembled genome
-
-A prior analysis of these data was conducted before the *A.agestis* was available. This resulted in a much smaller dataset, but the results matched those reported in this manuscript. Here we present the electronic lab book for the previous 1) data assessment, and 2) population structure analysis. 
 
 
 
@@ -417,9 +414,18 @@ After filtering, kept 61210 out of a possible 61210 Sites
 Run Time = 1.00 seconds
 ```
 
+Conclusion: No library sequenced particularly poorly, and there are no loci that were sequenced only in a particular library. 
 
 
-# Analysis of smaller dataset with higher genotyping rate (95%)
+# 3. Analysis of smaller dataset with higher genotyping rate (95%)
+
+
+
+
+# Analysis of ddRAD loci using a de novo assembled genome
+
+A prior analysis of these data was conducted before the *A.agestis* was available. This resulted in a much smaller dataset, but the results matched those reported in this manuscript. Here we present the electronic lab book for the previous 1) data assessment, and 2) population structure analysis. 
+
 
 ## 1. Raw data to variants
 
