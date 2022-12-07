@@ -2,7 +2,7 @@
 
 1. [Assessment of depth and missingness in the final dataset](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/SuppMat.md#1-assessment-of-depth-and-missingness-in-the-final-dataset)
 
-2. [Is there a difference in SNPs sequenced per population or per library?]()
+2. [Is there a difference in SNPs sequenced per population or per library?](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/SuppMat.md#2-is-there-a-difference-in-snps-sequenced-per-population-or-per-library)
 
 3. 
 
