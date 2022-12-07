@@ -183,20 +183,238 @@ for i in $(ls Lib*names); do vcftools --vcf AA251.FINAL.MAF0.01.missing0.5perpop
 Next, we'd like to determine the number of private alleles in each of these libraries. We'll compare the loci called in a library that isn't found in the rest of the dataset: 
 ```
 export PATH=/share/apps/genomics/bcftools-1.15/bin:$PATH
-#bcf requires bgzipped vcf files: 
+#bcf requires bgzipped and indexed vcf files: 
 for i in $(ls Lib*vcf); do bcftools view $i -Oz -o $i.gz; done
+for i in $(ls Lib*vcf.gz); do bcftools index $i; done
+
 for i in $(ls No*vcf); do bcftools view $i -Oz -o $i.gz; done
+for i in $(ls No*vcf.gz); do bcftools index $i; done
 
 #Create a file containing Lib1-Lib6, one per line
 seq -f "Lib%g" 1 6 > Lib.names
 
 #And run each in turn: 
-bcftools isec -p Lib1_pvtalleles No_Lib1.names.subset.recode.vcf.gz Lib1.names.subset.recode.vcf.gz 
-bcftools isec -p Lib2_pvtalleles No_Lib2.names.subset.recode.vcf.gz Lib2.names.subset.recode.vcf.gz 
-bcftools isec -p Lib3_pvtalleles No_Lib3.names.subset.recode.vcf.gz Lib3.names.subset.recode.vcf.gz 
-bcftools isec -p Lib4_pvtalleles No_Lib4.names.subset.recode.vcf.gz Lib4.names.subset.recode.vcf.gz 
-bcftools isec -p Lib5_pvtalleles No_Lib5.names.subset.recode.vcf.gz Lib5.names.subset.recode.vcf.gz 
-bcftools isec -p Lib6_pvtalleles No_Lib6.names.subset.recode.vcf.gz Lib6.names.subset.recode.vcf.gz 
+for i in $(cat Lib.names); do bcftools isec -p ${i}_pvtalleles No_${i}.names.subset.recode.vcf.gz ${i}.names.subset.recode.vcf.gz; done 
+
+#Check which file we're interested in: 
+cat Lib1_pvtalleles/README.txt
+
+This file was produced by vcfisec.
+The command line was:	bcftools isec  -p Lib1_pvtalleles No_Lib1.names.subset.recode.vcf.gz Lib1.names.subset.recode.vcf.gz
+
+Using the following file names:
+Lib1_pvtalleles/0000.vcf	for records private to	No_Lib1.names.subset.recode.vcf.gz
+Lib1_pvtalleles/0001.vcf	for records private to	Lib1.names.subset.recode.vcf.gz
+Lib1_pvtalleles/0002.vcf	for records from No_Lib1.names.subset.recode.vcf.gz shared by both	No_Lib1.names.subset.recode.vcf.gz Lib1.names.subset.recode.vcf.gz
+Lib1_pvtalleles/0003.vcf	for records from Lib1.names.subset.recode.vcf.gz shared by both	No_Lib1.names.subset.recode.vcf.gz Lib1.names.subset.recode.vcf.gz
+```
+
+
+Count the number of private alleles in each of the libraries: 
+```
+#We're interested in private alleles within each library. These are written to 0001.vcf in each folder: 
+
+for i in $(cat Lib.names); do vcftools --vcf ${i}_pvtalleles/0001.vcf; done
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib1_pvtalleles/0001.vcf
+
+After filtering, kept 45 out of 45 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib2_pvtalleles/0001.vcf
+
+After filtering, kept 44 out of 44 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib3_pvtalleles/0001.vcf
+
+After filtering, kept 43 out of 43 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib4_pvtalleles/0001.vcf
+
+After filtering, kept 42 out of 42 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib5_pvtalleles/0001.vcf
+
+After filtering, kept 41 out of 41 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib6_pvtalleles/0001.vcf
+
+After filtering, kept 36 out of 36 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+
+### We're also interested in whether there are any loci that don't appear in a particular library. These are written to 0000.vcf
+for i in $(cat Lib.names); do vcftools --vcf ${i}_pvtalleles/0000.vcf; done
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib1_pvtalleles/0000.vcf
+
+After filtering, kept 206 out of 206 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib2_pvtalleles/0000.vcf
+
+After filtering, kept 207 out of 207 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib3_pvtalleles/0000.vcf
+
+After filtering, kept 208 out of 208 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib4_pvtalleles/0000.vcf
+
+After filtering, kept 209 out of 209 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib5_pvtalleles/0000.vcf
+
+After filtering, kept 210 out of 210 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib6_pvtalleles/0000.vcf
+
+After filtering, kept 215 out of 215 Individuals
+After filtering, kept 0 out of a possible 0 Sites
+File does not contain any sites
+Run Time = 0.00 seconds
+
+
+### For completeness we'll check how many loci are shared between the datasets in each case: 0002.vcf
+for i in $(cat Lib.names); do vcftools --vcf ${i}_pvtalleles/0002.vcf; done
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib1_pvtalleles/0002.vcf
+
+After filtering, kept 206 out of 206 Individuals
+After filtering, kept 61210 out of a possible 61210 Sites
+Run Time = 1.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib2_pvtalleles/0002.vcf
+
+After filtering, kept 207 out of 207 Individuals
+After filtering, kept 61210 out of a possible 61210 Sites
+Run Time = 1.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib3_pvtalleles/0002.vcf
+
+After filtering, kept 208 out of 208 Individuals
+After filtering, kept 61210 out of a possible 61210 Sites
+Run Time = 0.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib4_pvtalleles/0002.vcf
+
+After filtering, kept 209 out of 209 Individuals
+After filtering, kept 61210 out of a possible 61210 Sites
+Run Time = 1.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib5_pvtalleles/0002.vcf
+
+After filtering, kept 210 out of 210 Individuals
+After filtering, kept 61210 out of a possible 61210 Sites
+Run Time = 1.00 seconds
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf Lib6_pvtalleles/0002.vcf
+
+After filtering, kept 215 out of 215 Individuals
+After filtering, kept 61210 out of a possible 61210 Sites
+Run Time = 1.00 seconds
 ```
 
 
