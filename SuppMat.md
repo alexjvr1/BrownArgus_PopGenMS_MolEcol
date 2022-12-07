@@ -167,10 +167,36 @@ A prior analysis of these data was conducted before the *A.agestis* was availabl
 
 First, we have a look at the number of private alleles sequenced in each library that are present in our final dataset. ie, does "Library" explain a difference in the variants present in the final dataset: 
 
-Split the vcf files to include only individuals sequenced in each library. The pop files we used below can be found [here]()
+Split the vcf files to include only individuals sequenced in each library. The pop files we used below can be found [here](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/tree/main/Files/PopFiles_Splitvcfs)
+```
+export PATH=/share/apps/genomics/vcftools-0.1.16/bin:$PATH
+
+for i in $(ls Lib*names); do vcftools --vcf AA251.FINAL.MAF0.01.missing0.5perpop.vcf --keep $i --recode --recode-INFO-all --out $i.subset; done
+```
+
+And create vcf files that exclude each of these populations in turn (i.e., leave-one-out datasets)
+```
+for i in $(ls Lib*names); do vcftools --vcf AA251.FINAL.MAF0.01.missing0.5perpop.vcf --remove $i --recode --recode-INFO-all --out No_$i.subset; done
 ```
 
 
+Next, we'd like to determine the number of private alleles in each of these libraries. We'll compare the loci called in a library that isn't found in the rest of the dataset: 
+```
+export PATH=/share/apps/genomics/bcftools-1.15/bin:$PATH
+#bcf requires bgzipped vcf files: 
+for i in $(ls Lib*vcf); do bcftools view $i -Oz -o $i.gz; done
+for i in $(ls No*vcf); do bcftools view $i -Oz -o $i.gz; done
+
+#Create a file containing Lib1-Lib6, one per line
+seq -f "Lib%g" 1 6 > Lib.names
+
+#And run each in turn: 
+bcftools isec -p Lib1_pvtalleles No_Lib1.names.subset.recode.vcf.gz Lib1.names.subset.recode.vcf.gz 
+bcftools isec -p Lib2_pvtalleles No_Lib2.names.subset.recode.vcf.gz Lib2.names.subset.recode.vcf.gz 
+bcftools isec -p Lib3_pvtalleles No_Lib3.names.subset.recode.vcf.gz Lib3.names.subset.recode.vcf.gz 
+bcftools isec -p Lib4_pvtalleles No_Lib4.names.subset.recode.vcf.gz Lib4.names.subset.recode.vcf.gz 
+bcftools isec -p Lib5_pvtalleles No_Lib5.names.subset.recode.vcf.gz Lib5.names.subset.recode.vcf.gz 
+bcftools isec -p Lib6_pvtalleles No_Lib6.names.subset.recode.vcf.gz Lib6.names.subset.recode.vcf.gz 
 ```
 
 
