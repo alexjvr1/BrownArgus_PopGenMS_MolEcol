@@ -74,6 +74,8 @@ dev.off()
 
 ```
 
+### Mean depth per individual, with boxplots grouped per population. 
+
 ![alt_txt][out.idepth]
 
 [out.idepth]:https://user-images.githubusercontent.com/12142475/206146870-26fb5731-e093-4697-820d-044c896284f6.png
@@ -84,9 +86,68 @@ dev.off()
 ##Missingness per population
 
 summary(miss)
+     INDV               N_DATA      N_GENOTYPES_FILTERED     N_MISS     
+ Length:251         Min.   :61210   Min.   :0            Min.   :  562  
+ Class :character   1st Qu.:61210   1st Qu.:0            1st Qu.: 2410  
+ Mode  :character   Median :61210   Median :0            Median : 3187  
+                    Mean   :61210   Mean   :0            Mean   : 4781  
+                    3rd Qu.:61210   3rd Qu.:0            3rd Qu.: 4055  
+                    Max.   :61210   Max.   :0            Max.   :32982  
+     F_MISS        
+ Min.   :0.009182  
+ 1st Qu.:0.039381  
+ Median :0.052067  
+ Mean   :0.078108  
+ 3rd Qu.:0.066247  
+ Max.   :0.538834  
+
+
+## We can see that the majority of the samples have a very low missingness rate, although a few samples have >10% missingness.
+## Let's identify all individuals with >20% missingness (the usual allowed missingness in pop gen papers): 
+
+dim(miss[miss$F_MISS>0.2,])
+[1] 19  5
+
+miss[miss$F_MISS>0.2,]
+
+INDV N_DATA N_GENOTYPES_FILTERED N_MISS   F_MISS
+15  BAR_22_2014  61210                    0  32982 0.538834
+16  BAR_24_2014  61210                    0  13409 0.219066
+25   BAR_6_2014  61210                    0  15772 0.257670
+71  BRO_18_2013  61210                    0  12464 0.203627
+72  BRO_19_2013  61210                    0  21061 0.344078
+91  FOR_22_2014  61210                    0  30230 0.493874
+93  FOR_24_2014  61210                    0  16141 0.263699
+94  FOR_25_2014  61210                    0  28421 0.464320
+95  FOR_26_2014  61210                    0  30387 0.496438
+96  FOR_29_2014  61210                    0  14856 0.242705
+97  FOR_30_2014  61210                    0  28172 0.460252
+109 HOD_20_2014  61210                    0  21605 0.352965
+116 HOD_34_2014  61210                    0  12270 0.200457
+119 HOD_38_2014  61210                    0  14439 0.235893
+120 HOD_39_2014  61210                    0  15041 0.245728
+139 LYD_25_2014  61210                    0  18262 0.298350
+143 LYD_31_2014  61210                    0  27881 0.455497
+146 LYD_34_2014  61210                    0  29949 0.489283
+211  SWD_7_2014  61210                    0  31076 0.507695
+
+## LYD_34_2014 and SWD_7_2014 are again the worst two samples. 
+
+## Let's plot this per population to see if any particular population is worse off: 
+
+miss$pop <- pop$V1  #add population information
+
+#plot
+pdf("AA251.miss_perpop.pdf")
+ggplot(miss, aes(y=F_MISS, x=pop))+geom_boxplot()+geom_point(color="black", size=1, alpha=0.9)
+dev.off()
+
 ```
+### The proportion of missing data per individual, grouped by population. 
 
+![alt_txt][miss]
 
+[miss]:https://user-images.githubusercontent.com/12142475/206148905-8bfe17bf-fda3-43a2-91b4-e803240f5d0c.png
 
 
 # Analysis of ddRAD loci using a de novo assembled genome
