@@ -414,7 +414,91 @@ After filtering, kept 61210 out of a possible 61210 Sites
 Run Time = 1.00 seconds
 ```
 
-Conclusion: No library sequenced particularly poorly, and there are no loci that were sequenced only in a particular library. 
+
+2. Next, we'll use a linear model to see if Library or Population explain individual missingness in the dataset
+
+Use vcftools to calculate the missingness per individual
+```
+
+```
+
+Use R to run the model. The file pop_lib contains population and library information for each individual and can be found [pop_lib]([pop_lib](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/pop_lib))
+```
+#R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
+#Copyright (C) 2022 The R Foundation for Statistical Computing
+#Platform: x86_64-apple-darwin17.0 (64-bit)
+
+library("lme4")
+
+miss <- read.table("out.imiss", header = T)
+pop_lib <- read.table("pop_lib", header=T)
+summary(pop_lib)
+    INDV               POP            Library_nr
+ Length:251         Length:251         1:45      
+ Class :character   Class :character   2:44      
+ Mode  :character   Mode  :character   3:43      
+                                       4:42      
+                                       5:41      
+                                       6:36    
+
+
+
+miss$pop <- as.factor(pop_lib$POP)
+miss$lib <- as.factor(pop_lib$Library_nr)
+summary(miss)
+    INDV               N_DATA      N_GENOTYPES_FILTERED     N_MISS          F_MISS         lib         pop    
+ Length:251         Min.   :61210   Min.   :0            Min.   :  562   Min.   :0.009182   1:45   BCH    :38  
+ Class :character   1st Qu.:61210   1st Qu.:0            1st Qu.: 2410   1st Qu.:0.039381   2:44   SWD    :38  
+ Mode  :character   Median :61210   Median :0            Median : 3187   Median :0.052067   3:43   WIS    :38  
+                    Mean   :61210   Mean   :0            Mean   : 4781   Mean   :0.078108   4:42   HOD    :29  
+                    3rd Qu.:61210   3rd Qu.:0            3rd Qu.: 4055   3rd Qu.:0.066247   5:41   BAR    :28  
+                    Max.   :61210   Max.   :0            Max.   :32982   Max.   :0.538834   6:36   MOF    :25  
+                                                                                                   (Other):55  
+
+
+
+
+#linear model of missingness with library and pop as explanatory variables
+fulllm <- lm(miss$F_MISS~miss$lib+miss$pop)
+summary(fulllm)
+
+
+
+Call:
+lm(formula = miss$F_MISS ~ miss$lib + miss$pop)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.14052 -0.03867 -0.01058  0.01299  0.46607 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.093277   0.020470   4.557 8.32e-06 ***
+miss$lib2   -0.006784   0.018057  -0.376 0.707470    
+miss$lib3   -0.020511   0.018267  -1.123 0.262631    
+miss$lib4    0.034245   0.019677   1.740 0.083097 .  
+miss$lib5   -0.021216   0.019602  -1.082 0.280212    
+miss$lib6   -0.029843   0.021000  -1.421 0.156600    
+miss$popBCH -0.041405   0.021693  -1.909 0.057508 .  
+miss$popBRO -0.018603   0.029651  -0.627 0.531005    
+miss$popFOR  0.094334   0.025483   3.702 0.000266 ***
+miss$popHOD  0.006415   0.023617   0.272 0.786141    
+miss$popLYD  0.019090   0.025293   0.755 0.451151    
+miss$popMOF -0.044540   0.023292  -1.912 0.057051 .  
+miss$popSWD -0.015049   0.022843  -0.659 0.510670    
+miss$popWIS -0.027311   0.020793  -1.313 0.190288    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.08334 on 237 degrees of freedom
+Multiple R-squared:  0.2085,	Adjusted R-squared:  0.1651 
+F-statistic: 4.802 on 13 and 237 DF,  p-value: 2.053e-07
+```
+
+### Conclusion: 
+
+1. There are no loci that were sequenced only in a particular library. 
+2. No library sequenced particularly poorly 
 
 
 # 3. Analysis of smaller dataset with higher genotyping rate (95%)
