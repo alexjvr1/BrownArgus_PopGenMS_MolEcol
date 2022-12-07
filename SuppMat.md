@@ -4,7 +4,7 @@
 
 2. [Is there a difference in SNPs sequenced per population or per library?](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/SuppMat.md#2-is-there-a-difference-in-snps-sequenced-per-population-or-per-library)
 
-3. 
+3. [Does a higher genotyping rate change the results and conclusions in our MS?](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/SuppMat.md#3-analysis-of-smaller-dataset-with-higher-genotyping-rate-95)
 
 
 ## 1. Assessment of depth and missingness in the final dataset
