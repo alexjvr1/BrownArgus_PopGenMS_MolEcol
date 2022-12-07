@@ -1,5 +1,12 @@
 # Supplementary material
 
+1. [Assessment of depth and missingness in the final dataset]()
+
+2. [Is there a difference in SNPs sequenced per population or per library?]()
+
+3. 
+
+
 ## 1. Assessment of depth and missingness in the final dataset
 
 The final filtered dataset comprised 251 individuals genotyped at 61210 loci. 
@@ -153,6 +160,22 @@ dev.off()
 # Analysis of ddRAD loci using a de novo assembled genome
 
 A prior analysis of these data was conducted before the *A.agestis* was available. This resulted in a much smaller dataset, but the results matched those reported in this manuscript. Here we present the electronic lab book for the previous 1) data assessment, and 2) population structure analysis. 
+
+
+
+# 2. Is there a difference in SNPs sequenced per population or per library?
+
+First, we have a look at the number of private alleles sequenced in each library that are present in our final dataset. ie, does "Library" explain a difference in the variants present in the final dataset: 
+
+Split the vcf files to include only individuals sequenced in each library. The pop files we used below can be found [here]()
+```
+
+
+```
+
+
+
+# Analysis of smaller dataset with higher genotyping rate (95%)
 
 ## 1. Raw data to variants
 
