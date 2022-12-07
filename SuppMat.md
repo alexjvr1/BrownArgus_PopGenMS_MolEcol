@@ -498,7 +498,7 @@ F-statistic: 4.802 on 13 and 237 DF,  p-value: 2.053e-07
 ### Conclusion: 
 
 1. There are no loci that were sequenced only in a particular library. 
-2. No library sequenced particularly poorly 
+2. No library significantly affected the missingness rate (inverse of the genotyping rate) in the dataset
 
 
 # 3. Analysis of smaller dataset with higher genotyping rate (95%)
