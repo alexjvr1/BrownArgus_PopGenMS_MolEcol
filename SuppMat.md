@@ -1,3 +1,94 @@
+# Supplementary material
+
+## 1. Assessment of depth and missingness in the final dataset
+
+The final filtered dataset comprised 251 individuals genotyped at 61210 loci. 
+
+Estimate depth and missingness per individual and plot per population: 
+```
+export PATH=/share/apps/genomics/vcftools-0.1.16/bin:$PATH
+
+vcftools --vcf AA251.FINAL.MAF0.01.missing0.5perpop.vcf --depth
+vcftools --vcf AA251.FINAL.MAF0.01.missing0.5perpop.vcf --missing-indv
+```
+
+Read into R and determine median and range of depth. Plot per population ranges. 
+```
+#R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
+#Copyright (C) 2022 The R Foundation for Statistical Computing
+#Platform: x86_64-apple-darwin17.0 (64-bit)
+
+library(ggplot2)
+
+depth <- read.table("out.idepth", header=T)
+miss <- read.table("out.imiss", header=T)
+
+head(depth)
+         INDV N_SITES MEAN_DEPTH
+1 BAR_10_2013   61210    410.177
+2 BAR_11_2014   61210    246.913
+3 BAR_12_2013   61210    238.969
+4 BAR_13_2014   61210    255.450
+5 BAR_14_2013   61210    147.284
+6 BAR_14_2014   61210    382.788
+
+head(miss)
+         INDV N_DATA N_GENOTYPES_FILTERED N_MISS    F_MISS
+1 BAR_10_2013  61210                    0   3000 0.0490116
+2 BAR_11_2014  61210                    0   4033 0.0658879
+3 BAR_12_2013  61210                    0   2520 0.0411697
+4 BAR_13_2014  61210                    0   2992 0.0488809
+5 BAR_14_2013  61210                    0   3552 0.0580297
+6 BAR_14_2014  61210                    0   1270 0.0207482
+
+summary(depth)
+     INDV              N_SITES        MEAN_DEPTH     
+ Length:251         Min.   :61210   Min.   :  9.604  
+ Class :character   1st Qu.:61210   1st Qu.:161.687  
+ Mode  :character   Median :61210   Median :215.247  
+                    Mean   :61210   Mean   :235.247  
+                    3rd Qu.:61210   3rd Qu.:263.539  
+                    Max.   :61210   Max.   :812.052
+		    
+#There are some low depth individuals. Let's see who they are: 		    
+depth[depth$MEAN_DEPTH<20,]
+
+INDV N_SITES MEAN_DEPTH
+146 LYD_34_2014   61210   15.49270
+211  SWD_7_2014   61210    9.60392
+221 WIS_20_2014   61210   13.29600
+
+#We decided to keep SWD_7_2014 because it's mean depth is close to 10x, our lower threshold. The rest of the individuals all have a mean depth >20x
+#We can visualise this: 
+#First get pop info from the out.idepth file in linux
+awk -F "_" '{print $1}' > pop
+
+#Read into R
+pop <- read.table("pop", header=F)
+depth$pop <- pop$V1
+
+#plot
+pdf("AA251.depth_perpop.pdf")
+ggplot(depth, aes(y=MEAN_DEPTH, x=pop))+geom_boxplot()+geom_point(color="black", size=1, alpha=0.9)
+dev.off()
+
+```
+
+![alt_txt][out.idepth]
+
+[out.idepth]:https://user-images.githubusercontent.com/12142475/206146870-26fb5731-e093-4697-820d-044c896284f6.png
+
+
+
+```
+##Missingness per population
+
+summary(miss)
+```
+
+
+
+
 # Analysis of ddRAD loci using a de novo assembled genome
 
 A prior analysis of these data was conducted before the *A.agestis* was available. This resulted in a much smaller dataset, but the results matched those reported in this manuscript. Here we present the electronic lab book for the previous 1) data assessment, and 2) population structure analysis. 
