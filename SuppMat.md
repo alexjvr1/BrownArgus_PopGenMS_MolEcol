@@ -20,6 +20,12 @@ vcftools --vcf AA251.FINAL.MAF0.01.missing0.5perpop.vcf --missing-indv
 ```
 
 Read into R and determine median and range of depth. Plot per population ranges. 
+
+Data files used: 
+
+[out.imiss](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/out.imiss)
+
+[out.idepth](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/out.idepth)
 ```
 #R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
 #Copyright (C) 2022 The R Foundation for Statistical Computing
@@ -162,7 +168,9 @@ dev.off()
 
 # 2. Is there a difference in SNPs sequenced per population or per library?
 
-First, we have a look at the number of private alleles sequenced in each library that are present in our final dataset. ie, does "Library" explain a difference in the variants present in the final dataset: 
+### 2.1 Are there variants that were sequenced only in a particular library that were retained in the final dataset? 
+
+First, we have a look at the number of private SNPs sequenced in any library that are present in our final dataset. ie, does "Library" explain a difference in the variants present in the final dataset: 
 
 Split the vcf files to include only individuals sequenced in each library. The pop files we used below can be found [here](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/tree/main/Files/PopFiles_Splitvcfs)
 ```
@@ -414,15 +422,24 @@ After filtering, kept 61210 out of a possible 61210 Sites
 Run Time = 1.00 seconds
 ```
 
+### 2.2. Does library or population explain differences in the variants available in the final dataset? 
 
-2. Next, we'll use a linear model to see if Library or Population explain individual missingness in the dataset
+We'll use a linear model to see if Library or Population explain individual missingness in the dataset
 
 Use vcftools to calculate the missingness per individual
 ```
+export PATH=/share/apps/genomics/vcftools-0.1.16/bin:$PATH
 
+vcftools --vcf AA251.FINAL.MAF0.01.missing0.5perpop.vcf --missing-indv
+
+##This generates an output called out.imiss
 ```
 
-Use R to run the model. The file pop_lib contains population and library information for each individual and can be found [pop_lib]([pop_lib](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/pop_lib))
+Use R to run the model. 
+
+The file pop_lib contains population and library information for each individual and can be found here: [pop_lib]([pop_lib](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/pop_lib))
+
+And the out.imiss file here: [out.imiss](https://github.com/alexjvr1/BrownArgus_PopGenMS_MolEcol/blob/main/Files/out.imiss)
 ```
 #R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
 #Copyright (C) 2022 The R Foundation for Statistical Computing
